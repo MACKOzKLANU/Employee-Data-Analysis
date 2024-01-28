@@ -10,9 +10,6 @@ class TestEmployeeSalaryAnalysis(unittest.TestCase):
         employees = load_data(self.file_path)
         self.assertTrue(len(employees) > 0)
 
-    # def test_load_data_file_not_found(self):
-    #     with self.assertRaises(FileNotFoundError):
-    #         load_data("nonexistent_file.csv")
     def test_employee_instance_creation(self):
         employee = Employee("001", "John Doe", "HR", "Manager", 50000, "2022")
 
