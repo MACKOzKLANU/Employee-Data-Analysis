@@ -2,9 +2,22 @@ import csv
 from matplotlib import pyplot as plt
 from datetime import datetime
 
-
 class Employee:
     def __init__(self, employee_id, name, department, position, salary, date_of_joining):
+        """
+        Initializes an Employee object.
+
+        Parameters:
+        - employee_id (str): Unique identifier for the employee.
+        - name (str): Name of the employee.
+        - department (str): Department to which the employee belongs.
+        - position (str): Job position of the employee.
+        - salary (str): Salary of the employee.
+        - date_of_joining (str): Date when the employee joined.
+
+        Returns:
+        - None
+        """
         self.employee_id = employee_id
         self.name = name
         self.department = department
@@ -14,6 +27,15 @@ class Employee:
 
 
 def load_data(file_path):
+    """
+    Loads employee data from a CSV file.
+
+    Parameters:
+    - file_path (str): Path to the CSV file containing employee data.
+
+    Returns:
+    - List[Employee]: List of Employee objects.
+    """
     try:
         employees = []
 
@@ -32,37 +54,53 @@ def load_data(file_path):
 
 
 def print_data(employees):
+    """
+    Prints employee data.
+
+    Parameters:
+    - employees (List[Employee]): List of Employee objects.
+
+    Returns:
+    - None
+    """
     data = employees
     for employee in data:
         print(employee.employee_id, employee.name, employee.department, employee.position, employee.salary, employee.date_of_joining)
 
 
 def clean_data(employees):
+    """
+    To be implemented.
+    """
     pass
 
 
 def average_salary_by_department(employees):
+    """
+    Calculates and displays the average salary by department.
+
+    Parameters:
+    - employees (List[Employee]): List of Employee objects.
+
+    Returns:
+    - None
+    """
     data = employees
-    list_of_departaments = []
+    list_of_departments = []
     for employee in data:
-        list_of_departaments.append(employee.department)
+        list_of_departments.append(employee.department)
 
-    departament_salary_list = {}
+    department_salary_list = {}
     for employee in data:
-        if employee.department in departament_salary_list:
-            departament_salary_list[employee.department] += int(employee.salary)
-            print(departament_salary_list[employee.department])
+        if employee.department in department_salary_list:
+            department_salary_list[employee.department] += int(employee.salary)
         else:
-            departament_salary_list[employee.department] = int(employee.salary)
+            department_salary_list[employee.department] = int(employee.salary)
 
-    for data in departament_salary_list:
-        print(data, departament_salary_list[data])
-        departament_salary_list[data] = int(departament_salary_list[data]) / int(list_of_departaments.count(data))
-        print(departament_salary_list[data])
-        print(list_of_departaments.count(data))
-    print(departament_salary_list)
+    for data in department_salary_list:
+        department_salary_list[data] = int(department_salary_list[data]) / int(list_of_departments.count(data))
 
-    plt.bar(departament_salary_list.keys(), departament_salary_list.values())
+    plt.bar(department_salary_list.keys(), department_salary_list.values())
     plt.xlabel('Department')
     plt.ylabel('Average Salary')
     plt.title('Average Salary by Department')
@@ -70,6 +108,15 @@ def average_salary_by_department(employees):
 
 
 def salary_distribution_histogram(employees):
+    """
+    Displays a histogram of salary distribution.
+
+    Parameters:
+    - employees (List[Employee]): List of Employee objects.
+
+    Returns:
+    - None
+    """
     data = employees
     salary_list = []
     for employee in data:
@@ -83,6 +130,15 @@ def salary_distribution_histogram(employees):
 
 
 def top_5_earners_pie_chart(employees):
+    """
+    Displays a pie chart of the top 5 earners' proportion of the total payroll.
+
+    Parameters:
+    - employees (List[Employee]): List of Employee objects.
+
+    Returns:
+    - None
+    """
     data = employees
     top_5_earners_dict = {}
 
@@ -91,7 +147,6 @@ def top_5_earners_pie_chart(employees):
 
     for employee in top_5_earners:
         top_5_earners_dict[employee.name] = int(employee.salary)
-    print(top_5_earners_dict)
 
     plt.pie(top_5_earners_dict.values(), labels=top_5_earners_dict.keys(), autopct='%1.1f%%')
     plt.title('Top 5 Earners Proportion of Total Payroll')
@@ -99,6 +154,15 @@ def top_5_earners_pie_chart(employees):
 
 
 def box_plot_by_position(employees):
+    """
+    Displays a box plot of salaries by position.
+
+    Parameters:
+    - employees (List[Employee]): List of Employee objects.
+
+    Returns:
+    - None
+    """
     positions_salary = {}
 
     for employee in employees:
@@ -115,26 +179,37 @@ def box_plot_by_position(employees):
 
 
 def scatter_plot_service_vs_salary(employees):
+    """
+    Displays a scatter plot of years of service vs. salary.
+
+    Parameters:
+    - employees (List[Employee]): List of Employee objects.
+
+    Returns:
+    - None
+    """
     current_year = datetime.now().year
-    print(current_year)
     working_time_dict = {}
     for employee in employees:
         if employee.salary in working_time_dict:
             working_time_dict[employee.salary].append(int(current_year - int(employee.date_of_joining)))
         else:
             working_time_dict[employee.salary] = [current_year - int(employee.date_of_joining)]
-    print(working_time_dict)
 
     plt.scatter(working_time_dict.values(), working_time_dict.keys())
-
     plt.xlabel('Years of Service')
     plt.ylabel('Salary')
     plt.title('Scatter Plot of Years of Service vs. Salary')
     plt.show()
 
 
-# average_salary_by_department(load_data("data.csv"))
-# salary_distribution_histogram(load_data("data.csv"))
-# top_5_earners_pie_chart(load_data("data.csv"))
-# box_plot_by_position(load_data("data.csv"))
-# scatter_plot_service_vs_salary(load_data("data.csv"))
+# Example Usage
+# Uncomment the following lines and provide the correct file path
+# for your employee data CSV file.
+
+# employee_data = load_data("data.csv")
+# average_salary_by_department(employee_data)
+# salary_distribution_histogram(employee_data)
+# top_5_earners_pie_chart(employee_data)
+# box_plot_by_position(employee_data)
+# scatter_plot_service_vs_salary(employee_data)
